@@ -3,28 +3,28 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Offcanvas, Navbar, Nav, Button, Container } from 'react-bootstrap';
+import { Form,NavDropdown, Modal, Navbar, Nav, Button, Container, NavLink, Row, Col} from 'react-bootstrap';
 import bgImage from './assets/bg-image.jpg';
 
 const services = [
   {
-    title: "Comprehensive Marketing Plan",
-    description: "Responsive. I am always available via phone, text, or email.",
+    title: "Always Available for Assistance",
+    description: "Our team is readily accessible via phone, text, or email to promptly address any inquiries or concerns.",
     img: "https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/rmtn3r5zpsljdsncbwa4/image-007"
   },
   {
-    title: "Syndication",
-    description: "I market your property locally, nationally, and internationally.",
+    title: "Comprehensive Marketing Strategy",
+    description: "We implement a strategic marketing plan that promotes properties on local, national, and international platforms, ensuring maximum exposure.",
     img: "https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/ks8ztlvw2b35q5qgs6xn/image-011"
   },
   {
-    title: "Virtual Tour",
-    description: "Let's make your home stand out with a high quality virtual tour.",
+    title: "Enhancing Property Appeal",
+    description: "High-quality virtual tours are utilized to distinguish homes in the market and effectively showcase their unique features.",
     img: "https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/zr3bugldblvebixagfs1/image-009"
   },
   {
-    title: "Photography",
-    description: "Beautiful, high-end photography is a central part of our marketing plan for your property.",
+    title: "Professional Visual Presentation",
+    description: "Beautiful, high-end photography is a fundamental aspect of our marketing strategy, designed to present each property in the best possible light.",
     img: "https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/dywgmsgzddtcsqxagbwh/image-013"
   }
 ];
@@ -43,7 +43,7 @@ const sellingProcess = [
   {
     step: 'Step 3: Review Offers & Reach Agreement with Buyer',
     description: 'Once an agreement is reached, we guide you through the transaction process. This involves coordinating inspections, appraisals, and paperwork. We ensure all legal requirements are met and assist you in understanding every aspect of the closing process.',
-    img: 'https://plus.unsplash.com/premium_vector-1718400635659-8ef7ac1b9446?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    img: 'https://plus.unsplash.com/premium_vector-1682309204238-27c9e5f46685?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     step: 'Step 4: Complete Transaction Process',
@@ -53,7 +53,7 @@ const sellingProcess = [
   {
     step: 'Step 5: After-Sale Service',
     description: 'We assist you through the closing process, ensuring all paperwork is completed and that you understand each step of the transaction.',
-    img: 'https://plus.unsplash.com/premium_vector-1682268951150-dad3f406a505?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    img: 'https://plus.unsplash.com/premium_vector-1682300600211-e68a6cd17ea2?q=80&w=1928&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];
 
@@ -77,9 +77,10 @@ const buyingProcess = [
   {
     step: 'Step 4: Complete Settlement Process',
     description: 'We will assist you through the settlement process, coordinating inspections, appraisals, and final paperwork to ensure a smooth closing. We’ll be there to answer any questions and provide support every step of the way.',
-    img: 'https://plus.unsplash.com/premium_vector-1720900147193-0ff1f28f8738?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    img: 'https://plus.unsplash.com/premium_vector-1726190685850-e8297aaa7dc8?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 ];
+
 
 
 function App() {
@@ -91,6 +92,35 @@ function App() {
   const sellingStepsLength = sellingProcess.length;
   const buyingStepsLength = buyingProcess.length;
 
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    message: '',
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData); // Add your form submission logic here
+    handleCloseModal(); // Close the modal after submission
+  };
+  
+  const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+
+    // State for newsletter
+    const [email, setEmail] = useState('');
+    const [policyAgreed, setPolicyAgreed] = useState(false); // State for the checkbox
+  
+    const handleNewsletterSubmit = (e) => {
+      e.preventDefault();
+      if (policyAgreed) {
+        console.log('Email submitted:', email);
+        // Further processing here
+      } else {
+        alert('You must agree to the privacy policy.');
+      }
+    };
   // Initialize AOS
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -101,146 +131,200 @@ function App() {
   AOS.refresh(); // Refresh AOS when steps change
 }, [currentStep, currentBuyingStep]);
 
-// Autoplay for Selling Process
-useEffect(() => {
-  const intervalId = setInterval(() => {
-    setCurrentStep((prevStep) => (prevStep + 1) % sellingStepsLength);
-  }, 5000); // Change every 5 seconds
 
-  return () => clearInterval(intervalId); // Clean up the interval on unmount
-}, [sellingStepsLength]);
-
-// Autoplay for Buying Process
-useEffect(() => {
-  const intervalId = setInterval(() => {
-    setCurrentBuyingStep((prevStep) => (prevStep + 1) % buyingStepsLength);
-  }, 5000); // Change every 5 seconds
-
-  return () => clearInterval(intervalId); // Clean up the interval on unmount
-}, [buyingStepsLength]);
-  
   return (
-    <div>
-      {/* Navbar */}
-      <Navbar 
-        variant="dark" 
-        expand="lg" 
-        style={{ 
-          backgroundColor: 'transparent', 
-          position: 'absolute', 
-          zIndex: 1000, 
-          width: '100%', 
-          paddingTop: '50px', 
-          boxShadow: 'none',
-        }}
-      >
-        <Container>
-          <Navbar.Brand href="#home">
-            <img
-              src="https://res.cloudinary.com/luxuryp/images/w_1920,c_limit,f_auto,q_auto/tprhoiglqzbp9mbu8x8s/jhsereno-light"
-              alt="Logo"
-              height="30"
-              className="d-inline-block align-top"
-            />
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link className="nav-link" href="#meet-the-team">MEET THE TEAM</Nav.Link>
-              <Nav.Link className="nav-link" href="#our-communities">OUR COMMUNITIES</Nav.Link>
-              <Nav.Link className="nav-link" href="#home-evaluation">HOME EVALUATION</Nav.Link>
-              <Nav.Link className="nav-link" href="#services">SERVICES</Nav.Link>
-              <Nav.Link className="nav-link" href="#homes-america">HOMES ACROSS AMERICA</Nav.Link>
-              <Nav.Link className="nav-link" href="#testimonials">TESTIMONIALS</Nav.Link>
-              <Nav.Link className="nav-link" href="#contact-us">CONTACT US</Nav.Link>
-            </Nav>
-            {/* Button to open the side navbar */}
-            <Button variant="outline-light" onClick={handleShow}>
-              ☰
-            </Button>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    
+<div className="App">
 
-      {/* Offcanvas for Side Navigation */}
-      <Offcanvas show={show} onHide={handleClose} placement="end" style={{ width: '250px', backgroundColor: '#343a40', color: '#ffffff' }}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title></Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body style={{ backgroundColor: '#495057', padding: '20px' }}>
-          {/* Search Input */}
-          <div className="mb-3">
-            <input 
-              type="text" 
-              className="form-control" 
-              placeholder="Search..." 
-              aria-label="Search" 
-              style={{ backgroundColor: '#ffffff', color: '#000000' }} // Customize search input color
+{/* Navbar */}
+<Navbar 
+  variant="dark" 
+  expand="lg" 
+  style={{ 
+    position: 'absolute', 
+    zIndex: 1000, 
+    width: '100%', 
+    paddingTop: '20px',
+    boxShadow: 'none',
+  }}
+>
+  <Container fluid>
+    <Navbar.Brand href="#home">
+      <img
+        src="https://res.cloudinary.com/luxuryp/images/w_1920,c_limit,f_auto,q_auto/tprhoiglqzbp9mbu8x8s/jhsereno-light"
+        alt="Logo"
+        className="d-inline-block align-top"
+      />
+    </Navbar.Brand>
+    
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+      <Nav className="ms-auto">
+        {/* Dropdown for Team and Testimonials */}
+        <NavDropdown title="About Us" id="about-dropdown">
+          <NavDropdown.Item href="https://hansenpartners.net/team">Meet the Team</NavDropdown.Item>
+          <NavDropdown.Item href="https://hansenpartners.net/testimonials">Testimonials</NavDropdown.Item>
+        </NavDropdown>
+
+        {/* Dropdown for Home Services */}
+        <NavDropdown title="Home Services" id="services-dropdown">
+          <NavDropdown.Item href="https://hansenpartners.net/home-valuation">Home Evaluation</NavDropdown.Item>
+          <NavDropdown.Item href="https://hansenpartners.net/services">Services</NavDropdown.Item>
+        </NavDropdown>
+
+        {/* Dropdown for Home Search */}
+        <NavDropdown title="Find Your Home" id="home-search-dropdown">
+          <NavDropdown.Item href="https://hansenpartners.net/home-search/listings">Search for Homes</NavDropdown.Item>
+          <NavDropdown.Item href="https://hansenpartners.net/neighborhoods">Our Communities</NavDropdown.Item>
+          <NavDropdown.Item href="https://hansenpartners.net/FeaturedListingHOA">Homes Across America</NavDropdown.Item>
+        </NavDropdown>
+
+        {/* Contact Us Link */}
+        <Nav.Link className="nav-link" onClick={handleShowModal}>Contact Us</Nav.Link>
+      </Nav>
+    </Navbar.Collapse>
+  </Container>
+</Navbar>
+
+  <Modal 
+  show={showModal} 
+  onHide={handleCloseModal} 
+  dialogClassName="contact-modal modal-lg" // Make the modal larger
+>
+  <Modal.Header closeButton>
+  </Modal.Header>
+  <Modal.Body>
+    <Row>
+      {/* Contact Information Section */}
+      <Col md={6} className="contact-info text-center"> {/* Centered text */}
+        <h5>Contact Information</h5>
+        <p>(925) 553-6707</p>
+        <p><a href="mailto:luxuryhomesinwc@icloud.com">luxuryhomesinwc@icloud.com</a></p>
+        <p>4337 Chabot Drive, Pleasanton, CA 94588</p>
+        <p>Julie Hansen-Orvis | CA DRE# 00934447</p>
+      </Col>
+
+      {/* Send Us a Message Section */}
+      <Col md={6}>
+        <h5>Send Us a Message</h5>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formName">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your name"
+              name="name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              required
+              className="custom-input form-control-lg" // Increased input size
             />
+          </Form.Group>
+          <Form.Group controlId="formPhone">
+            <Form.Label>Phone</Form.Label>
+            <Form.Control
+              type="tel"
+              placeholder="Enter your phone number"
+              name="phone"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              required
+              className="custom-input form-control-lg" // Increased input size
+            />
+          </Form.Group>
+          <Form.Group controlId="formEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter your email"
+              name="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              required
+              className="custom-input form-control-lg" // Increased input size
+            />
+          </Form.Group>
+          <Form.Group controlId="formMessage">
+            <Form.Label>Message</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={4} // Adjusted rows for a larger textarea
+              placeholder="Your message"
+              name="message"
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              required
+              className="custom-input form-control-lg" // Increased input size
+            />
+          </Form.Group>
+          <Form.Text className="text-muted">
+            By providing your contact information, you acknowledge and agree to our Privacy Policy and consent to receiving marketing communications.
+          </Form.Text>
+         
+        </Form>
+        <Button 
+  type="submit" 
+  className="mt-3 modal-button" // Use the exclusive modal button class
+>
+  Submit A Message
+</Button>
+      </Col>
+    </Row>
+  </Modal.Body>
+</Modal>
+
+  {/* Header with Background Image */}
+  <header 
+    className="bg-dark text-white text-center py-5 d-flex align-items-center justify-content-center" 
+    style={{
+      backgroundImage: `url(${bgImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      height: '100vh',
+      position: 'relative'
+    }}
+    data-aos="fade-down" // Header animation
+  >
+    <div className="container">
+      <h1 className="display-4" data-aos="zoom-in">Our Real Estate Services</h1>
+      <h3 className="lead" data-aos="fade-up">We offer a wide range of services for both tenants and landlords.</h3>
+    </div>
+  </header>
+
+
+
+{/* Services Section */}
+<div className="container services-section">
+  <h2 className="text-left services-title mb-4" data-aos="fade-up">Discover Our Exceptional Services</h2>
+  <p className="text-left services-intro mb-4" data-aos="fade-up">
+    Unlock the full potential of your real estate journey with our tailored services designed for both tenants and landlords. 
+    At Luxury Presence, we don’t just offer services; we provide a comprehensive suite of solutions that elevate your experience 
+    and maximize your property's value. Whether you’re looking to sell, rent, or invest, our expert team is dedicated to 
+    guiding you every step of the way.
+  </p>
+  <p className="text-left mb-4" data-aos="fade-up">
+    Explore our range of specialized services:
+  </p>
+  <div className="row">
+    {services.map((service, index) => (
+      <div className="col-lg-4 col-md-6 col-sm-12 mb-4" key={index} data-aos="fade-up">
+        <div className="service-wrapper">
+          <div className="card service-card" style={{ height: '100%' }}>
+            <img src={service.img} className="img-fluid service-img" alt={service.title} />
           </div>
-          <Nav className="flex-column">
-            <Nav.Link href="#home" className="mb-2 text-white">HOME</Nav.Link>
-            <Nav.Link href="#contact-us" className="mb-2 text-white">CONTACT US</Nav.Link>
-            <Nav.Link href="#meet-the-team" className="mb-2 text-white">MEET THE TEAM</Nav.Link>
-            <Nav.Link href="#our-communities" className="mb-2 text-white">OUR COMMUNITIES</Nav.Link>
-            <Nav.Link href="#home-evaluation" className="mb-2 text-white">HOME EVALUATION</Nav.Link>
-            <Nav.Link href="#homes-america" className="mb-2 text-white">HOMES ACROSS AMERICA</Nav.Link>
-            <Nav.Link href="#testimonials" className="mb-2 text-white">TESTIMONIALS</Nav.Link>
-          </Nav>
-        </Offcanvas.Body>
-      </Offcanvas>
-
-      {/* Header with Background Image */}
-      <header 
-        className="bg-dark text-white text-center py-5 d-flex align-items-center justify-content-center" 
-        style={{
-          backgroundImage: `url(${bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          height: '100vh',
-          position: 'relative'
-        }}
-        data-aos="fade-down" // Header animation
-      >
-        <div>
-          <h1 data-aos="zoom-in">Our Real Estate Services</h1>
-          <p className="lead" data-aos="fade-up">We offer a wide range of services for both tenants and landlords.</p>
-        </div>
-      </header>
-
-      {/* Services Section */}
-      <div className="container services-section">
-        <h2 className="text-center services-title mb-4" data-aos="fade-up">Discover Our Exceptional Services</h2>
-        <p className="text-center services-intro mb-4" data-aos="fade-up">
-          Unlock the full potential of your real estate journey with our tailored services designed for both tenants and landlords. 
-          At Luxury Presence, we don’t just offer services; we provide a comprehensive suite of solutions that elevate your experience 
-          and maximize your property's value. Whether you’re looking to sell, rent, or invest, our expert team is dedicated to 
-          guiding you every step of the way.
-        </p>
-        <p className="text-center mb-4" data-aos="fade-up">
-          Explore our range of specialized services:
-        </p>
-        <div className="row">
-          {services.map((service, index) => (
-            <div className="col-md-6 mb-4" key={index} data-aos="fade-up">
-              <div className="card animated d-flex flex-column" style={{ height: '100%' }}>
-                <div className="row g-0 align-items-center flex-grow-1">
-                  <div className="col-md-6">
-                    <img src={service.img} className="img-fluid rounded-start" alt={service.title} />
-                  </div>
-                  <div className="col-md-6">
-                    <div className="card-body d-flex flex-column justify-content-between">
-                      <h5 className="card-title">{service.title}</h5>
-                      <p className="card-text">{service.description}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+          {/* Title and text outside the card */}
+          <div className="service-text">
+            <h5 className="card-title">{service.title}</h5>
+            <p className="card-text">{service.description}</p>
+          </div>
         </div>
       </div>
+    ))}
+  </div>
+</div>
+
+
 
 
 {/* Decor Guidance Section */}
@@ -293,106 +377,112 @@ useEffect(() => {
       </div>
       
       <div>
-      {/* Selling Process */}
-      <div className="container selling-process mb-5">
-        <h2 className="text-center process-title mb-4" data-aos="fade-up">Selling Your Home Made Simple</h2>
+  {/* Selling Process */}
+  <div className="container selling-process mb-5 " data-aos="fade-right">
+    <h2 className="text-center process-title mb-4" data-aos="fade-up">
+      Selling Your Home Made Simple
+    </h2>
 
-        {/* Numbered Buttons for Steps */}
-        <div className="text-center mb-4">
-          <div className="button-container">
-            {sellingProcess.map((item, index) => (
-              <div className="button-wrapper" key={index}>
-                <button
-                  className={`btn ${currentStep === index ? 'active' : ''}`}
-                  onClick={() => setCurrentStep(index)}
-                >
-                  {index + 1}
-                </button>
-                {index < sellingProcess.length - 1 && <div className="line"></div>}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Current Step Display */}
-        <div className="row">
-          <div className="col-md-12 mb-4 d-flex align-items-stretch">
-            <div
-              className="card process-card d-flex"
-              data-aos="fade-up" // AOS animation trigger
-              style={{ height: '400px' }}
+    {/* Numbered Buttons for Steps */}
+    <div className="text-center mb-4">
+      <div className="button-container d-flex justify-content-center flex-wrap" data-aos="fade-right">
+        {sellingProcess.map((item, index) => (
+          <div className="button-wrapper"  key={index}>
+            <button
+              className={`btn ${currentStep === index ? 'active' : ''}`}
+              onClick={() => setCurrentStep(index)}
             >
-              <div className="card-body d-flex justify-content-between align-items-center">
-                <div className="text-content">
-                  <h5 className="card-title" style={{ fontSize: '1.5rem' }}>
-                    {sellingProcess[currentStep].step}
-                  </h5>
-                  <p className="card-text" style={{ fontSize: '1.1rem' }}>
-                    {sellingProcess[currentStep].description}
-                  </p>
-                </div>
-                <img
-                  src={sellingProcess[currentStep].img}
-                  alt={sellingProcess[currentStep].step}
-                  className="img-fluid rounded"
-                  style={{ maxWidth: '200px', height: 'auto' }}
-                />
-              </div>
-            </div>
+              {index + 1}
+            </button>
+            {index < sellingProcess.length - 1 && <div className="line"></div>}
           </div>
-        </div>
+        ))}
       </div>
+    </div>
 
-      {/* Buying Process */}
-      <div className="container buying-process mb-5">
-        <h2 className="text-center process-title mb-4" data-aos="fade-up">Buying Your Dream Home</h2>
-
-        {/* Numbered Buttons for Steps */}
-        <div className="text-center mb-4">
-          <div className="button-container">
-            {buyingProcess.map((item, index) => (
-              <div className="button-wrapper" key={index}>
-                <button
-                  className={`btn ${currentBuyingStep === index ? 'active' : ''}`}
-                  onClick={() => setCurrentBuyingStep(index)}
-                >
-                  {index + 1}
-                </button>
-                {index < buyingProcess.length - 1 && <div className="line"></div>}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Current Step Display */}
-        <div className="row">
-          <div className="col-md-12 mb-4 d-flex align-items-stretch">
-            <div
-              className="card process-card d-flex"
-              data-aos="fade-up" // AOS animation trigger
-              style={{ height: '400px' }}
-            >
-              <div className="card-body d-flex justify-content-between align-items-center">
-                <div className="text-content">
-                  <h5 className="card-title" style={{ fontSize: '1.5rem' }}>
-                    {buyingProcess[currentBuyingStep].step}
-                  </h5>
-                  <p className="card-text" style={{ fontSize: '1.1rem' }}>
-                    {buyingProcess[currentBuyingStep].description}
-                  </p>
-                </div>
-                <img
-                  src={buyingProcess[currentBuyingStep].img}
-                  alt={buyingProcess[currentBuyingStep].step}
-                  className="img-fluid rounded"
-                  style={{ maxWidth: '200px', height: 'auto' }}
-                />
-              </div>
+    {/* Current Step Display */}
+    <div className="row">
+      <div className="col-12 mb-4 d-flex align-items-stretch" >
+        <div
+          className="card process-card d-flex flex-column" 
+          data-aos="fade-up"
+          style={{ height: '100%', minHeight: '300px' }} // Allow card to expand with content
+        >
+          <div className="card-body d-flex flex-column flex-lg-row justify-content-between align-items-center">
+            <div className="text-content text-lg-left">
+              <h5 className="card-title" style={{ fontSize: '1.5rem' }}>
+                {sellingProcess[currentStep].step}
+              </h5>
+              <p className="card-text" style={{ fontSize: '1.1rem', textAlign: 'justify' }}>
+                {sellingProcess[currentStep].description}
+              </p>
             </div>
+            <img
+              src={sellingProcess[currentStep].img}
+              alt={sellingProcess[currentStep].step}
+              className="img-fluid rounded mb-3 mb-lg-0"
+              style={{ maxWidth: '30%', height: 'auto' }} // Make image responsive
+            />
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  {/* Buying Process */}
+  <div className="container buying-process mb-5">
+    <h2 className="text-center process-title mb-4" data-aos="fade-up">
+      Buying Your Dream Home
+    </h2>
+
+    {/* Numbered Buttons for Steps */}
+    <div className="text-center mb-4">
+      <div className="button-container d-flex justify-content-center flex-wrap">
+        {buyingProcess.map((item, index) => (
+          <div className="button-wrapper" key={index}>
+            <button
+              className={`btn ${currentBuyingStep === index ? 'active' : ''}`}
+              onClick={() => setCurrentBuyingStep(index)}
+            >
+              {index + 1}
+            </button>
+            {index < buyingProcess.length - 1 && <div className="line"></div>}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Current Step Display */}
+    <div className="row">
+      <div className="col-12 mb-4 d-flex align-items-stretch">
+        <div
+          className="card process-card d-flex flex-column"
+          data-aos="fade-up"
+          style={{ height: '100%', minHeight: '300px' }}
+        >
+          <div className="card-body d-flex flex-column flex-lg-row justify-content-between align-items-center">
+            <div className="text-content text-lg-left">
+              <h5 className="card-title" style={{ fontSize: '1.5rem' }}>
+                {buyingProcess[currentBuyingStep].step}
+              </h5>
+              <p className="card-text" style={{ fontSize: '1.1rem', textAlign: 'justify' }}>
+                {buyingProcess[currentBuyingStep].description}
+              </p>
+            </div>
+            <img
+              src={buyingProcess[currentBuyingStep].img}
+              alt={buyingProcess[currentBuyingStep].step}
+              className="img-fluid rounded mb-3 mb-lg-0"
+              style={{ maxWidth: '30%', height: 'auto' }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 {/* Real Estate Success Section */}
 <div className="container my-5">
@@ -618,46 +708,55 @@ useEffect(() => {
 </div>
 
 
-{/* Footer Section */}
-<footer className="footer my-5">
-  <div className="container text-center">
-    <h2 className="footer-title mb-4" data-aos="fade-up">Julie Hansen Partnership</h2>
-    <p className="footer-description mb-4" data-aos="fade-up">
-      We are an elite group of the East Bay’s most talented and visionary real estate professionals. Our mission is to provide buyers and sellers with the exceptional service they deserve. We prioritize integrity, offer extensive resources, and maintain a global reach, ensuring that every aspect of your real estate journey is handled with the utmost care and expertise.
-    </p>
+      {/* Footer Section */}
+      <footer className="footer my-5">
+        <div className="container text-center">
+          <h2 className="footer-title mb-4" data-aos="fade-up">Julie Hansen Partnership</h2>
+          <p className="footer-description mb-4" data-aos="fade-up">
+            We are an elite group of the East Bay’s most talented and visionary real estate professionals. Our mission is to provide buyers and sellers with the exceptional service they deserve. We prioritize integrity, offer extensive resources, and maintain a global reach, ensuring that every aspect of your real estate journey is handled with the utmost care and expertise.
+          </p>
 
-    <div className="row">
-      <div className="col-md-8 footer-contact-info" data-aos="fade-up">
-        <h3>Contact Information</h3>
-        <p><strong>4733 Chabot Drive #100, Pleasanton, CA 94588</strong></p>
-        <p><strong>Julie Hansen-Orvis | CA DRE# 00934447</strong></p>
-        <p><strong>(925) 553-6707</strong></p>
-        <p><strong> <a href="mailto:luxuryhomesinwc@icloud.com">luxuryhomesinwc@icloud.com</a></strong></p>
+          <div className="row">
+            <div className="col-md-8 footer-contact-info" data-aos="fade-up">
+              <h3>Contact Information</h3>
+              <p><strong>4733 Chabot Drive #100, Pleasanton, CA 94588</strong></p>
+              <p><strong>Julie Hansen-Orvis | CA DRE# 00934447</strong></p>
+              <p><strong>(925) 553-6707</strong></p>
+              <p><strong><a href="mailto:luxuryhomesinwc@icloud.com">luxuryhomesinwc@icloud.com</a></strong></p>
 
-        <div className="logos mt-4">
-          <img src="https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/zbesma34ygwklawiysod/dark-realtor-logo_x1vczu" alt="Realtor Logo" className="footer-logo" />
-          <img src="https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/siun2nwoji9w7v0mssvy/dark-equal-logo_gahxpa" alt="Equal Logo" className="footer-logo" />
-          <img src="https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/qje0mcix0r0qeoiikumu/sereno-logo" alt="Sereno Logo" className="footer-logo" />
+              <div className="logos mt-4">
+                <img src="https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/zbesma34ygwklawiysod/dark-realtor-logo_x1vczu" alt="Realtor Logo" className="footer-logo" />
+                <img src="https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/siun2nwoji9w7v0mssvy/dark-equal-logo_gahxpa" alt="Equal Logo" className="footer-logo" />
+                <img src="https://res.cloudinary.com/luxuryp/images/f_auto,q_auto/qje0mcix0r0qeoiikumu/sereno-logo" alt="Sereno Logo" className="footer-logo" />
+              </div>
+            </div>
+
+            <div className="col-md-4 footer-newsletter" data-aos="fade-up">
+              <h3>Subscribe to Our Newsletter</h3>
+              <p>Stay updated with the latest news and trends in the luxury real estate market. Sign up today!</p>
+              <Form className="d-flex flex-column" onSubmit={handleSubmit}>
+                <Form.Group controlId="newsletterEmail">
+                  <Form.Control 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    required 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} // Handle email input change
+                    className="mb-2"
+                  />
+                </Form.Group>
+                <Button type="submit" className="btn newsletter-btn">Subscribe</Button>
+              </Form>
+              <p className="privacy-policy mt-2">
+                By providing your contact information, you agree to our <a href="/privacy-policy">Privacy Policy</a> and consent to receive marketing communications, including automated calls, texts, and emails. You may opt out at any time.
+              </p>
+            </div>
+          </div>
+
+          <p className="footer-credit mt-4">Website Designed & Developed by Luxury Presence</p>
+          <p className="footer-copyright">Copyright 2024 | <a href="/privacy-policy">Privacy Policy</a></p>
         </div>
-      </div>
-
-      <div className="col-md-4 footer-newsletter" data-aos="fade-up">
-        <h3>Subscribe to Our Newsletter</h3>
-        <p>Stay updated with the latest news and trends in the luxury real estate market. Sign up today!</p>
-        <form className="d-flex flex-column">
-          <input type="email" placeholder="Enter your email" required className="mb-2" />
-          <button type="submit" className="btn newsletter-btn">Subscribe</button>
-        </form>
-        <p className="privacy-policy mt-2">
-          By providing your contact information, you agree to our <a href="/privacy-policy">Privacy Policy</a> and consent to receive marketing communications, including automated calls, texts, and emails. You may opt out at any time.
-        </p>
-      </div>
-    </div>
-
-    <p className="footer-credit mt-4">Website Designed & Developed by Luxury Presence</p>
-    <p className="footer-copyright">Copyright 2024 | <a href="/privacy-policy">Privacy Policy</a></p>
-  </div>
-</footer>
+      </footer>
 
 
       </div>

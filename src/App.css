@@ -1,4 +1,5 @@
 body {
+  overflow-x: hidden;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -6,38 +7,223 @@ h1, h2, h3, h4, h5 {
   font-family: 'Merriweather', serif;
 }
 
+@media (max-width: 768px) {
+  .navbar {
+    padding-top: 10px; /* Adjust navbar padding for smaller screens */
+  }
+
+  .header h1 {
+    font-size: 2.5rem; /* Adjust heading size for mobile */
+  }
+
+  .header p {
+    font-size: 1.2rem; /* Adjust paragraph size for mobile */
+  }
+}
+
+/* Navbar General Styles */
+.navbar {
+  background-color: rgba(62, 65, 72, 0.571); /* Semi-transparent black background */
+}
+
+/* Navbar Link Styles */
+.nav-link {
+  color: #ffffff; /* Default link color */
+  font-size: 1.1rem; /* Adjust font size for better readability */
+  padding: 15px 20px; /* More padding for larger clickable area */
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+  text-transform: uppercase; /* Uppercase letters for links */
+}
+
+.nav-link:hover {
+  color: #42423f; /* Change link color on hover */
+}
+
+/* Dropdown Styles */
+.dropdown-toggle {
+  color: #ffffff; /* Dropdown toggle text color */
+  font-size: 1.1rem; /* Font size for dropdown toggle */
+  padding: 15px 20px; /* Padding for toggle button */
+}
+
+.dropdown-toggle:hover {
+  color: #53524e; /* Change color on hover */
+}
+
+/* Dropdown Menu Styles */
+.navbar .dropdown-menu {
+  background-color: rgba(62, 65, 72, 0.712); /* Background color for dropdown */
+}
+
+.navbar .dropdown-item {
+  color: #ffffff; /* Dropdown item text color */
+  padding: 10px 20px; /* Padding for dropdown items */
+  transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+.navbar .dropdown-item:hover {
+  background-color: #ffffff; /* Change background on hover */
+  color: #000000; /* Change text color on hover */
+}
+
+/* Active state for dropdown items */
+.navbar .dropdown-item.active {
+  background-color: #fbdd49; /* Active background */
+  color: #000000; /* Active text color */
+}
+
+/* Navbar Brand Logo */
+.navbar .navbar-brand img {
+  height: 40px; /* Consistent logo height */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .nav-link {
+    padding: 10px 15px; /* Adjust padding for smaller screens */
+  }
+
+  .dropdown-toggle {
+    padding: 10px 15px; /* Adjust padding for smaller screens */
+  }
+}
+
+/* Services Section Styling */
 .services-section {
   padding: 50px 0;
-  background-color: #ffffff;
 }
 
-.services-title {
+.services-section .services-title {
   font-weight: bold;
   font-size: 2.5rem;
+  text-align: left;
 }
 
-.services-intro {
+.services-section .services-intro {
   font-size: 1.25rem;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
-.card-title {
+/* Service Wrapper - for each service */
+.services-section .service-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Service Card Styling */
+.services-section .service-card {
+  height: auto;
+  max-width: 100%;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Add margin between card and text */
+  transition: transform 0.3s ease;
+}
+
+/* Image styling */
+.services-section .service-img {
+  object-fit: cover;
+  height: 200px; /* Define a fixed height for the image */
+  width: 100%;
+}
+
+/* Title and text outside the card */
+.services-section .service-text {
+  text-align: left;
+  width: 100%; /* Full width for better alignment */
+}
+
+.services-section .card-title {
   font-weight: bold;
+  font-size: 1.25rem;
+  margin-bottom: 5px; /* Margin for spacing below title */
 }
 
-.card-text {
+.services-section .card-text {
+  font-size: 1rem;
+  text-align: justify; /* Justify the description */
+  margin-top: 0;
   color: #666;
+  overflow-wrap: break-word;
 }
-.decor-guidance-text {
-  padding-left: 180px !important; /* Force the padding to apply */
+
+/* Hover effect */
+.services-section .service-card:hover {
+  transform: translateY(-5px); /* Slightly lift the card on hover */
+}
+
+/* Responsive Styling */
+@media (max-width: 992px) {
+  .services-title {
+    font-size: 2rem;
+  }
+
+  .services-intro {
+    font-size: 1.15rem;
+  }
+
+  .card-title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .services-title {
+    font-size: 1.75rem;
+  }
+
+  .services-intro {
+    font-size: 1rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .service-img {
+    height: 150px; /* Adjust image height for mobile */
+  }
+}
+
+@media (max-width: 576px) {
+  .services-title {
+    font-size: 1.5rem;
+  }
+
+  .services-intro {
+    font-size: 0.95rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  .services-section {
+    padding: 30px 0;
+  }
+
+  .service-img {
+    height: 130px; /* Adjust image height for small screens */
+  }
 }
 
 
+.selling-process .process-card,
+.buying-process
 .process-card {
-  border: none; /* Remove the border */
-  border-radius: 10px; /* Optional: add border-radius for rounded corners */
-  padding: 20px; /* Increase padding for a larger card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a subtle shadow for depth */
-  display: flex; /* Use flexbox for the card */
+  transition: opacity 0.5s ease-in-out;
+  border: none; /* Remove any borders */
+  display: flex;
+  flex-direction: column; /* Ensure the card displays in a column layout */
+  max-width: 100%; /* Ensure the card doesn't exceed container width */
 }
 
 .text-content {
@@ -45,7 +231,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .button-container {
-  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
@@ -53,10 +239,11 @@ h1, h2, h3, h4, h5 {
 .button-wrapper {
   display: flex;
   align-items: center;
+  margin: 5px; /* Add margin for spacing */
 }
 
-.btn {
-  margin: 0 15px; /* Adds space between the buttons */
+.button-container .btn {
+  min-width: 40px; /* Set a minimum width for buttons */
   padding: 10px 15px;
   font-size: 1.2rem; /* Adjusts button size */
   background-color: #ffffff; /* Customize button default background color */
@@ -66,11 +253,12 @@ h1, h2, h3, h4, h5 {
   transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
 }
 
-
+/* Hover effect for buttons */
 .button-container .btn:hover {
   background-color: #fbdd49; /* Darker shade for hover effect */
 }
 
+/* Active button color */
 .button-container .btn.active {
   background-color: #fbdd49; /* Color for the active button */
 }
@@ -81,6 +269,68 @@ h1, h2, h3, h4, h5 {
   background-color: #514717; /* Customize line color */
   margin: 0 5px; /* Adds space around the line */
 }
+/* Ensure consistent image size for Selling and Buying processes */
+.selling-process .img-fluid,
+.buying-process .img-fluid {
+  max-width: 250px; /* Set a fixed max width for all images in selling and buying process */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Responsive adjustments for text and image layout */
+@media (min-width: 992px) {
+  .selling-process .card-body,
+  .buying-process .card-body {
+    flex-direction: row; /* Make text and image side by side on large screens */
+    align-items: center;
+  }
+
+  .selling-process .img-fluid,
+  .buying-process .img-fluid {
+    max-width: 250px; /* Consistent image size on large screens */
+    margin-left: 20px; /* Add space between text and image */
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .selling-process .img-fluid,
+  .buying-process .img-fluid {
+    max-width: 80%; /* Make images larger on mobile */
+    height: auto; /* Maintain aspect ratio */
+    margin-left: 0; /* Remove margin for mobile */
+  }
+
+  .selling-process .text-content,
+  .buying-process .text-content {
+    text-align: center;
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .process-card {
+    padding: 15px; /* Less padding for smaller screens */
+  }
+
+  .btn {
+    font-size: 1rem; /* Smaller button size on mobile */
+    padding: 8px 10px; /* Adjust padding for mobile */
+  }
+
+  .line {
+    width: 30px; /* Shorter line on mobile */
+  }
+
+  .button-wrapper {
+    margin: 5px 5px; /* Space between buttons when stacked */
+  }
+
+  .img-fluid {
+    max-width: 80%; /* Make images larger on mobile */
+    height: auto; /* Maintain aspect ratio */
+  }
+}
+
 
 .marketing-strategy {
   background-color: #ffffff; /* Light background for contrast */
@@ -204,19 +454,19 @@ p {
   border: 2px solid rgb(255, 255, 255); /* Optional: Change border color on hover */
 }
 
-.newsletter-btn {
+.footer-newsletter .newsletter-btn {
   background-color: transparent; /* Transparent background */
   border: 2px solid #000000; /* White border */
-  color: #fff; /* White text */
+  color: #000000; /* White text */
   padding: 12px 20px; /* Padding for button */
   font-weight: bold; /* Bold text */
   text-transform: uppercase; /* Uppercase text */
   transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
 }
 
-.newsletter-btn:hover {
+.footer-newsletter .newsletter-btn:hover {
   background-color: #fff; /* White background on hover */
-  color: #000000; /* Dark text on hover */
+  color: #ffffff; /* Dark text on hover */
   border: 2px solid #000000; /* Remove the border on hover */
 }
 
@@ -236,3 +486,53 @@ p {
 .footer-logo {
   margin-right: 10px; /* Add some spacing between logos */
 }
+.contact-modal .modal-content {
+  border-radius: 0; /* Sharp borders */
+}
+
+.contact-info {
+  padding-right: 15px; /* Space between columns */
+}
+
+.custom-input {
+  border-radius: 0; /* Sharp edges for input fields */
+  border: 1px solid #ced4da; /* Standard border color */
+}
+
+.custom-input:focus {
+  border-color: #007bff; /* Highlight border on focus */
+  box-shadow: none; /* Remove default focus shadow */
+}
+
+/* Adjust modal padding */
+.modal-body {
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+/* Adjust heading styles */
+h5 {
+  margin-bottom: 15px; /* Space below headings */
+}
+
+/* Optional: Responsive adjustments */
+@media (max-width: 768px) {
+  .contact-info {
+    margin-bottom: 20px; /* Add space below contact info on smaller screens */
+  }
+}
+/* Increase specificity for modal button styles */
+.modal .modal-button {
+  background-color: #000000; /* Your desired background color */
+  color: white; /* Text color */
+  border: none; /* Remove border */
+  padding: 12px 24px; /* Adjust padding */
+  border-radius: 20px; /* Make it rounded */
+  transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition */
+}
+
+.modal .modal-button:hover {
+  background-color: #c7ced5; /* Darker color on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
